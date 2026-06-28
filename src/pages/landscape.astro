@@ -1,0 +1,80 @@
+---
+import GalleryLayout from '../layouts/GalleryLayout.astro';
+
+const images = Object.values(
+  import.meta.glob('/public/landscape/*.{jpg,jpeg,png}', {
+    eager: true,
+    as: 'url'
+  })
+);
+---
+
+<GalleryLayout title="Landscape">
+  <div class="masonry">
+    {images.map((img) => (
+      <img src={img} onclick={`openImg('${img}')`} />
+    ))}
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="closeImg()">
+    <img id="lightbox-img" />
+  </div>
+
+  <script>
+    function openImg(src) {
+      document.getElementById('lightbox').style.display = 'flex';
+      document.getElementById('lightbox-img').src = src;
+    }
+
+    function closeImg() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+  </script>
+
+  <style>
+    .masonry {
+      column-count: 3;
+      column-gap: 12px;
+    }
+
+    .masonry img {
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .masonry img:hover {
+      transform: scale(1.02);
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .masonry {
+        column-count: 2;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .masonry {
+        column-count: 1;
+      }
+    }
+  </style>
+</GalleryLayout>

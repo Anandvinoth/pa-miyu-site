@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const videos = import.meta.glob('../assets/videos/*.{mp4,webm}', {
+  eager: true,
+  as: 'url'
+});
+---
+
+<Layout>
+  <h1 class="gallery-label">Videos</h1>
+
+  <div class="video-grid">
+    {Object.values(videos).length === 0 ? (
+      <p>No videos found in src/assets/videos</p>
+    ) : (
+      Object.values(videos).map((video) => (
+        <video controls class="video">
+          <source src={video} type="video/mp4" />
+        </video>
+      ))
+    )}
+  </div>
+</Layout>
+
+<style>
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  padding: 20px;
+}
+
+.video {
+  width: 100%;
+  border-radius: 10px;
+}
+</style>
