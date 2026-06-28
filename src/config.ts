@@ -30,7 +30,7 @@ export const nav: NavItem[] = [
   { label: 'Videos', href: '/videos' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Family', href: '/family' },
+  //{ label: 'Family', href: '/family' },
 ];
 
 // Social / external links shown in the sidebar and on the contact page. Replace
